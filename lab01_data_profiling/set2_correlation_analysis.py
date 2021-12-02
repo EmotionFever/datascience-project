@@ -15,6 +15,6 @@ print(corr_mtx)
 fig = figure(figsize=[15, 15])
 
 heatmap(abs(corr_mtx), xticklabels=corr_mtx.columns, yticklabels=corr_mtx.columns, annot=True, cmap='Blues', fmt='.2f')
-title('Correlation analysis')
+title('Correlation analysis Set 2')
 savefig(f'lab01_data_profiling/images/correlation_analysis_set2.png')
 show()
