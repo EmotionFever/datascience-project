@@ -8,6 +8,7 @@
 from pandas import read_csv
 
 filename = 'lab01_data_profiling\data\set2_air_quality_tabular.csv'
+
 data = read_csv(filename)
 
 values = {'nr records': data.shape[0], 'nr variables': data.shape[1]}

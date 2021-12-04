@@ -4,8 +4,8 @@ from matplotlib.pyplot import subplots, savefig, show
 from ds_charts import get_variable_types, HEIGHT
 
 register_matplotlib_converters()
-filename = 'lab01_data_profiling\data\set2_air_quality_tabular.csv'
-data = read_csv(filename, index_col='date', parse_dates=True, infer_datetime_format=True)
+filename = "lab01_data_profiling/data/set1_NYC_collisions_tabular.csv"
+data = read_csv(filename, index_col='', parse_dates=True, infer_datetime_format=True)
 
 numeric_vars = get_variable_types(data)['Numeric']
 if [] == numeric_vars:
