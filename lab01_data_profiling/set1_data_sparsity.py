@@ -8,7 +8,13 @@ register_matplotlib_converters()
 filename = 'lab01_data_profiling\data\set1_NYC_collisions_tabular.csv'
 data = read_csv(filename, index_col='CRASH_DATE', parse_dates=True, infer_datetime_format=True)
 
+print(data.head())
+
 numeric_vars = get_variable_types(data)['Numeric']
+print(numeric_vars)
+numeric_vars = ['CRASH_TIME', 'PERSON_AGE', 'VEHICLE_ID']
+not_working = ['CRASH_DATE']
+#these now contain only person age and vehicle id, is that correct?
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -28,7 +34,14 @@ show()
 from matplotlib.pyplot import savefig, show, subplots
 from ds_charts import HEIGHT, get_variable_types
 
+#code error because of nans, give them string
+data.fillna('A',inplace=True)
+
 symbolic_vars = get_variable_types(data)['Symbolic']
+print(symbolic_vars)
+symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'CONTRIBUTING_FACTOR_1', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PED_ACTION']
+#symbolic_vars = ['BODILY_INJURY',  'PERSON_SEX', 'PERSON_TYPE', 'PED_ACTION']
+not_working = ['SAFETY_EQUIPMENT',  'PED_LOCATION']
 if [] == symbolic_vars:
     raise ValueError('There are no symbolic variables.')
 

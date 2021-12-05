@@ -4,10 +4,12 @@ from matplotlib.pyplot import subplots, savefig, show
 from ds_charts import get_variable_types, HEIGHT
 
 register_matplotlib_converters()
-filename = "lab01_data_profiling/data/set1_NYC_collisions_tabular.csv"
-data = read_csv(filename, index_col='', parse_dates=True, infer_datetime_format=True)
+filename = "lab01_data_profiling/data/set2_air_quality_tabular.csv"
+data = read_csv(filename, index_col='date', parse_dates=True, infer_datetime_format=True)
 
+#choose more numeric variables?
 numeric_vars = get_variable_types(data)['Numeric']
+print(numeric_vars)
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -27,7 +29,11 @@ show()
 from matplotlib.pyplot import savefig, show, subplots
 from ds_charts import HEIGHT, get_variable_types
 
-symbolic_vars = get_variable_types(data)['Symbolic']
+
+# Handpick symbolic variables because Python choses the wrong ones
+#symbolic_vars = get_variable_types(data)['Symbolic']
+symbolic_vars = ['City_EN', 'Prov_EN', 'ALARM']
+
 if [] == symbolic_vars:
     raise ValueError('There are no symbolic variables.')
 
