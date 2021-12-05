@@ -12,7 +12,7 @@ if [] == variables:
     raise ValueError('There are no numeric variables.')
 
 rows, cols = choose_grid(len(variables))
-fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT))
+fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
 i, j = 0, 0
 for n in range(len(variables)):
     axs[i, j].set_title('Histogram for %s'%variables[n])
