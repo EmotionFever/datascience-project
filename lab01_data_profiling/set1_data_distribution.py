@@ -45,17 +45,17 @@ if [] == numeric_vars:
 
 outliers_iqr = []
 outliers_stdev = []
-summary_5 = data.describe(include='number')
+summary5 = data.describe(include='number')
 
 for var in numeric_vars:
-    iqr = 1.5 * (summary_5[var].quantile(q=0.75) - summary_5[var].quantile(q=0.25))
+    iqr = 1.5 * (summary5[var]['75%'] - summary5[var]['25%'])
     outliers_iqr += [
-        data[data[var] > summary_5[var].quantile(q=0.75) + iqr].count()[var] +
-        data[data[var] < summary_5[var].quantile(q=0.25) - iqr].count()[var]]
-    std = NR_STDEV * summary_5[var].std()
+        data[data[var] > summary5[var]['75%']  + iqr].count()[var] +
+        data[data[var] < summary5[var]['25%']  - iqr].count()[var]]
+    std = NR_STDEV * summary5[var]['std']
     outliers_stdev += [
-        data[data[var] > summary_5[var].mean() + std].count()[var] +
-        data[data[var] < summary_5[var].mean() - std].count()[var]]
+        data[data[var] > summary5[var]['mean'] + std].count()[var] +
+        data[data[var] < summary5[var]['mean'] - std].count()[var]]
 
 outliers = {'iqr': outliers_iqr, 'stdev': outliers_stdev}
 figure(figsize=(12, HEIGHT))
