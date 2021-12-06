@@ -128,7 +128,9 @@ savefig('lab01_data_profiling/images/data_distribution_set2_histogram_numeric_di
 show()
 
 #Historgrams for symbolic variables
-symbolic_vars = get_variable_types(data)['Symbolic']
+# symbolic_vars = get_variable_types(data)['Symbolic']
+# symbolic_vars = ['City_EN', 'Prov_EN', 'GbCity', 'ALARM']
+symbolic_vars = ['City_EN', 'Prov_EN', 'ALARM']
 if [] == symbolic_vars:
     raise ValueError('There are no symbolic variables.')
 

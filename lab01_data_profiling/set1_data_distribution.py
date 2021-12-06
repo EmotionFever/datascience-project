@@ -21,7 +21,8 @@ data.boxplot(rot=45)
 savefig('lab01_data_profiling/images/data_distribution_set1_numeric_data_details.png')
 
 #Charts with details about single numeric
-numeric_vars = get_variable_types(data)['Numeric']
+# numeric_vars = get_variable_types(data)['Numeric']
+numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 rows, cols = choose_grid(len(numeric_vars))
@@ -38,7 +39,7 @@ show()
 #Chart with numbers of outliers
 NR_STDEV: int = 2
 
-numeric_vars = get_variable_types(data)['Numeric']
+numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -64,7 +65,7 @@ show()
 
 
 #Histrograms with number of outliers
-numeric_vars = get_variable_types(data)['Numeric']
+numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -81,7 +82,7 @@ show()
 
 
 #Histograms with trends
-numeric_vars = get_variable_types(data)['Numeric']
+numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -115,7 +116,7 @@ def histogram_with_distributions(ax: Axes, series: Series, var: str):
     distributions = compute_known_distributions(values)
     multiple_line_chart(values, distributions, ax=ax, title='Best fit for %s'%var, xlabel=var, ylabel='')
 
-numeric_vars = get_variable_types(data)['Numeric']
+numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -128,7 +129,7 @@ savefig('lab01_data_profiling/images/data_distribution_set1_histogram_numeric_di
 show()
 
 #Historgrams for symbolic variables
-symbolic_vars = get_variable_types(data)['Symbolic']
+symbolic_vars = ['CRASH_TIME', 'BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'CONTRIBUTING_FACTOR_1', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PED_ACTION'] 
 if [] == symbolic_vars:
     raise ValueError('There are no symbolic variables.')
 
@@ -137,13 +138,7 @@ fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=Fals
 i, j = 0, 0
 for n in range(len(symbolic_vars)):
     counts = data[symbolic_vars[n]].value_counts()
-    bar_chart(list(counts.index), list(counts.values), ax=axs[i, j], title='Histogram for %s'%symbolic_vars[n], xlabel=symbolic_vars[n], ylabel='nr records', percentage=False)
+    bar_chart(counts.index.to_list(), counts.values, ax=axs[i, j], title='Histogram for %s'%symbolic_vars[n], xlabel=symbolic_vars[n], ylabel='nr records', percentage=False)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-
 savefig('lab01_data_profiling/images/data_distribution_set1_histograms_symbolic.png')
 show()
-
-
-
-
-
