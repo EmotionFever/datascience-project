@@ -20,8 +20,7 @@ data.sample(n=100, random_state=1)
 print(data.describe())
 
 #Charts with details about numeric data in one chart
-data.boxplot(rot=45)
-savefig('lab01_data_profiling/images/data_distribution_set2_numeric_data_details.png')
+
 
 #Charts with details about single numeric
 numeric_vars = get_variable_types(data)['Numeric']
@@ -30,12 +29,7 @@ if [] == numeric_vars:
 rows, cols = choose_grid(len(numeric_vars))
 fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
 i, j = 0, 0
-for n in range(len(numeric_vars)):
-    axs[i, j].set_title('Boxplot for %s'%numeric_vars[n])
-    axs[i, j].boxplot(data[numeric_vars[n]].dropna().values)
-    i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_single_numeric_data_details.png')
-show()
+
 
 
 #Chart with numbers of outliers
@@ -49,54 +43,8 @@ outliers_iqr = []
 outliers_stdev = []
 summary_5 = data.describe(include='number')
 
-for var in numeric_vars:
-    iqr = 1.5 * (summary_5[var].quantile(q=0.75) - summary_5[var].quantile(q=0.25))
-    outliers_iqr += [
-        data[data[var] > summary_5[var].quantile(q=0.75) + iqr].count()[var] +
-        data[data[var] < summary_5[var].quantile(q=0.25) - iqr].count()[var]]
-    std = NR_STDEV * summary_5[var].std()
-    outliers_stdev += [
-        data[data[var] > summary_5[var].mean() + std].count()[var] +
-        data[data[var] < summary_5[var].mean() - std].count()[var]]
 
-outliers = {'iqr': outliers_iqr, 'stdev': outliers_stdev}
-figure(figsize=(12, HEIGHT))
-multiple_bar_chart(numeric_vars, outliers, title='Nr of outliers per variable', xlabel='variables', ylabel='nr outliers', percentage=False)
-savefig('lab01_data_profiling/images/data_distribution_set2_outliers.png')
-show()
-
-
-#Histrograms with number of outliers
-numeric_vars = get_variable_types(data)['Numeric']
-if [] == numeric_vars:
-    raise ValueError('There are no numeric variables.')
-
-fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
-i, j = 0, 0
-for n in range(len(numeric_vars)):
-    axs[i, j].set_title('Histogram for %s'%numeric_vars[n])
-    axs[i, j].set_xlabel(numeric_vars[n])
-    axs[i, j].set_ylabel("nr records")
-    axs[i, j].hist(data[numeric_vars[n]].dropna().values, 'auto')
-    i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_single_histograms_numeric.png')
-show()
-
-
-#Histograms with trends
-numeric_vars = get_variable_types(data)['Numeric']
-if [] == numeric_vars:
-    raise ValueError('There are no numeric variables.')
-
-fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
-i, j = 0, 0
-for n in range(len(numeric_vars)):
-    axs[i, j].set_title('Histogram with trend for %s'%numeric_vars[n])
-    distplot(data[numeric_vars[n]].dropna().values, norm_hist=True, ax=axs[i, j], axlabel=numeric_vars[n])
-    i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_histograms_trend_numeric.png')
-show()
-
+print('hier')
 
 #Histograms with distribution
 def compute_known_distributions(x_values: list) -> dict:
@@ -121,13 +69,14 @@ def histogram_with_distributions(ax: Axes, series: Series, var: str):
 numeric_vars = get_variable_types(data)['Numeric']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
-
+print('hier')
 fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
 i, j = 0, 0
 for n in range(len(numeric_vars)):
     histogram_with_distributions(axs[i, j], data[numeric_vars[n]].dropna(), numeric_vars[n])
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_histogram_numeric_distribution.png')
+    print(n)
+savefig('lab01_data_profiling/images/data_distribution_set2_histogram_numeric_distribution_sample.png')
 show()
 
 #Historgrams for symbolic variables
@@ -142,8 +91,8 @@ for n in range(len(symbolic_vars)):
     counts = data[symbolic_vars[n]].value_counts()
     bar_chart(list(counts.index), list(counts.values), ax=axs[i, j], title='Histogram for %s'%symbolic_vars[n], xlabel=symbolic_vars[n], ylabel='nr records', percentage=False)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-
-savefig('lab01_data_profiling/images/data_distribution_set2_histograms_symbolic.png')
+    print(n)
+savefig('lab01_data_profiling/images/data_distribution_set2_histograms_symbolic_sample.png')
 show()
 
 

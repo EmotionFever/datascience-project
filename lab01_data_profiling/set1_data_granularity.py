@@ -40,5 +40,5 @@ for i in range(rows):
         axs[i, j].set_xlabel(variables[i])
         axs[i, j].set_ylabel('Nr records')
         axs[i, j].hist(data[variables[i]].values, bins=bins[j])
-savefig('lab01_data_profiling\images\granularity_study_set2.png')
+savefig('lab01_data_profiling\images\granularity_study_set1.png')
 show()
