@@ -21438,7 +21438,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 40.0,NA,NA,NA,NA
 40.0,19974245.0,Driver,Not Ejected,Lap Belt & Harness
 22.0,20004886.0,Driver,Not Ejected,Lap Belt & Harness
-121.0,19929465.0,Driver,Ejected,None
+37.0,19929465.0,Driver,Ejected,None
 47.0,20007654.0,"Front passenger, if two or more persons, including the driver, are in the front seat",Not Ejected,Lap Belt & Harness
 36.0,19961988.0,Driver,Ejected,Unknown
 29.0,20011221.0,Driver,Not Ejected,Unknown
@@ -29297,7 +29297,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 40.0,20034472.0,Driver,Not Ejected,Air Bag Deployed/Lap Belt/Harness
 36.0,20034472.0,"Front passenger, if two or more persons, including the driver, are in the front seat",Not Ejected,Air Bag Deployed/Lap Belt/Harness
 20.0,NA,NA,NA,NA
-120.0,20034835.0,Driver,Not Ejected,Helmet (Motorcycle Only)
+37.0,20034835.0,Driver,Not Ejected,Helmet (Motorcycle Only)
 42.0,20033795.0,"Front passenger, if two or more persons, including the driver, are in the front seat",Not Ejected,Unknown
 61.0,20034836.0,Driver,Not Ejected,None
 19.0,20037691.0,Driver,Partially Ejected,None
@@ -30799,7 +30799,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 33.0,20040821.0,Driver,Not Ejected,Air Bag Deployed/Lap Belt/Harness
 65.0,20049003.0,Right rear passenger or motorcycle sidecar passenger,Not Ejected,Lap Belt & Harness
 46.0,20039820.0,Driver,Not Ejected,Lap Belt & Harness
-121.0,20048307.0,Driver,Ejected,None
+37.0,20048307.0,Driver,Ejected,None
 21.0,20040891.0,"Front passenger, if two or more persons, including the driver, are in the front seat",Not Ejected,Lap Belt & Harness
 19.0,20040892.0,Driver,Not Ejected,Lap Belt & Harness
 18.0,20041034.0,"Front passenger, if two or more persons, including the driver, are in the front seat",Not Ejected,Lap Belt & Harness
@@ -31067,7 +31067,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 18.0,20041995.0,Driver,Not Ejected,Air Bag Deployed/Lap Belt/Harness
 25.0,20041880.0,Driver,Partially Ejected,Unknown
 90.0,NA,NA,NA,NA
-120.0,20041519.0,Driver,Not Ejected,Unknown
+37.0,20041519.0,Driver,Not Ejected,Unknown
 41.0,20042701.0,Right rear passenger or motorcycle sidecar passenger,Not Ejected,Lap Belt
 29.0,NA,NA,NA,NA
 32.0,20042628.0,Driver,Not Ejected,None
@@ -31092,7 +31092,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 34.0,20042202.0,"Left rear passenger, or rear passenger on a bicycle, motorcycle, snowmobile",Not Ejected,None
 19.0,20042202.0,"Middle rear seat, or passenger lying across a seat",Not Ejected,None
 33.0,20042202.0,Right rear passenger or motorcycle sidecar passenger,Not Ejected,None
-112.0,20042803.0,"Left rear passenger, or rear passenger on a bicycle, motorcycle, snowmobile",Not Ejected,Lap Belt
+37.0,20042803.0,"Left rear passenger, or rear passenger on a bicycle, motorcycle, snowmobile",Not Ejected,Lap Belt
 28.0,20042803.0,Driver,Not Ejected,Lap Belt
 25.0,20047060.0,Driver,Not Ejected,Lap Belt
 21.0,20045481.0,Driver,Not Ejected,Lap Belt & Harness
@@ -34985,7 +34985,7 @@ PERSON_AGE,VEHICLE_ID,POSITION_IN_VEHICLE,EJECTION,SAFETY_EQUIPMENT
 18.0,20060477.0,Driver,Not Ejected,Helmet Only (In-Line Skater/Bicyclist)
 39.0,20058660.0,Driver,Not Ejected,Lap Belt & Harness
 23.0,20058660.0,"Left rear passenger, or rear passenger on a bicycle, motorcycle, snowmobile",Not Ejected,None
-121.0,20059865.0,Driver,Partially Ejected,None
+37.0,20059865.0,Driver,Partially Ejected,None
 60.0,20071160.0,Driver,Not Ejected,Unknown
 18.0,20061497.0,Driver,Not Ejected,Lap Belt
 51.0,20076224.0,Driver,Not Ejected,Lap Belt & Harness
