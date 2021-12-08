@@ -18,7 +18,7 @@ print(data.describe())
 
 #Charts with details about numeric data in one chart
 data.boxplot(rot=45)
-savefig('lab01_data_profiling/images/data_distribution_set2_numeric_data_details.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_numeric_data_details.png')
 
 #Charts with details about single numeric
 numeric_vars = get_variable_types(data)['Numeric']
@@ -31,7 +31,7 @@ for n in range(len(numeric_vars)):
     axs[i, j].set_title('Boxplot for %s'%numeric_vars[n])
     axs[i, j].boxplot(data[numeric_vars[n]].dropna().values)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_single_numeric_data_details.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_single_numeric_data_details.png')
 show()
 
 
@@ -59,7 +59,7 @@ for var in numeric_vars:
 outliers = {'iqr': outliers_iqr, 'stdev': outliers_stdev}
 figure(figsize=(12, HEIGHT))
 multiple_bar_chart(numeric_vars, outliers, title='Nr of outliers per variable', xlabel='variables', ylabel='nr outliers', percentage=False)
-savefig('lab01_data_profiling/images/data_distribution_set2_outliers.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_outliers.png')
 show()
 
 #Histrograms with number of outliers
@@ -75,7 +75,7 @@ for n in range(len(numeric_vars)):
     axs[i, j].set_ylabel("nr records")
     axs[i, j].hist(data[numeric_vars[n]].dropna().values, 'auto')
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_single_histograms_numeric.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_single_histograms_numeric.png')
 show()
 
 
@@ -90,7 +90,7 @@ for n in range(len(numeric_vars)):
     axs[i, j].set_title('Histogram with trend for %s'%numeric_vars[n])
     distplot(data[numeric_vars[n]].dropna().values, norm_hist=True, ax=axs[i, j], axlabel=numeric_vars[n])
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_histograms_trend_numeric.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_histograms_trend_numeric.png')
 show()
 
 
@@ -123,13 +123,11 @@ i, j = 0, 0
 for n in range(len(numeric_vars)):
     histogram_with_distributions(axs[i, j], data[numeric_vars[n]].dropna(), numeric_vars[n])
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling/images/data_distribution_set2_histogram_numeric_distribution.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_histogram_numeric_distribution.png')
 show()
 
 #Historgrams for symbolic variables
-# symbolic_vars = get_variable_types(data)['Symbolic']
-# symbolic_vars = ['City_EN', 'Prov_EN', 'GbCity', 'ALARM']
-symbolic_vars = ['City_EN', 'Prov_EN', 'ALARM']
+symbolic_vars = ['City_EN', 'Prov_EN']
 if [] == symbolic_vars:
     raise ValueError('There are no symbolic variables.')
 
@@ -141,10 +139,22 @@ for n in range(len(symbolic_vars)):
     bar_chart(list(counts.index), list(counts.values), ax=axs[i, j], title='Histogram for %s'%symbolic_vars[n], xlabel=symbolic_vars[n], ylabel='nr records', percentage=False)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
 
-savefig('lab01_data_profiling/images/data_distribution_set2_histograms_symbolic.png')
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_histograms_symbolic.png')
 show()
 
 
+#Class distribution
+symbolic_vars = ['ALARM']
+if [] == symbolic_vars:
+    raise ValueError('There are no symbolic variables.')
 
+rows, cols = choose_grid(len(symbolic_vars))
+fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
+i, j = 0, 0
+for n in range(len(symbolic_vars)):
+    counts = data[symbolic_vars[n]].value_counts()
+    bar_chart(list(counts.index), list(counts.values), ax=axs[i, j], title='Class distribution for %s'%symbolic_vars[n], xlabel=symbolic_vars[n], ylabel='nr records', percentage=False)
+    i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
 
-
+savefig('lab01_data_profiling/images/set2/data_distribution_set2_class_distribution.png')
+show()
