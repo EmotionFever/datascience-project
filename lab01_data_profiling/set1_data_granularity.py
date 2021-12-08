@@ -8,6 +8,7 @@ from ds_charts import get_variable_types, choose_grid, HEIGHT
 from matplotlib.pyplot import subplots, savefig, show
 
 variables = get_variable_types(data)['Numeric']
+print(variables)
 if [] == variables:
     raise ValueError('There are no numeric variables.')
 
@@ -18,9 +19,9 @@ for n in range(len(variables)):
     axs[i, j].set_title('Histogram for %s'%variables[n])
     axs[i, j].set_xlabel(variables[n])
     axs[i, j].set_ylabel('nr records')
-    axs[i, j].hist(data[variables[n]].values, bins=100000)
+    axs[i, j].hist(data[variables[n]].values, bins=100)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
-savefig('lab01_data_profiling\images\granularity_single_set1.png')
+savefig('lab01_data_profiling\images\set1\granularity_single_set1.png')
 show()
 
 from ds_charts import get_variable_types, HEIGHT
@@ -40,5 +41,5 @@ for i in range(rows):
         axs[i, j].set_xlabel(variables[i])
         axs[i, j].set_ylabel('Nr records')
         axs[i, j].hist(data[variables[i]].values, bins=bins[j])
-savefig('lab01_data_profiling\images\granularity_study_set1.png')
+savefig('lab01_data_profiling\images\set1\granularity_study_set1.png')
 show()

@@ -7,12 +7,13 @@ register_matplotlib_converters()
 #filename = 'lab01_data_profiling\data\set2_air_quality_tabular.csv'
 filename = 'lab01_data_profiling\data\set1_NYC_collisions_tabular.csv'
 data = read_csv(filename, index_col='CRASH_DATE', parse_dates=True, infer_datetime_format=True)
-
-print(data.head())
+data = data[data['PERSON_AGE'].between(-1,130)]
+#df = df[df['closing_price'].between(99, 101)]
+print(data.info())
 
 numeric_vars = get_variable_types(data)['Numeric']
 print(numeric_vars)
-numeric_vars = ['CRASH_TIME', 'PERSON_AGE', 'VEHICLE_ID']
+#numeric_vars = ['CRASH_TIME', 'PERSON_AGE', 'VEHICLE_ID']
 not_working = ['CRASH_DATE']
 #these now contain only person age and vehicle id, is that correct?
 if [] == numeric_vars:
@@ -20,6 +21,38 @@ if [] == numeric_vars:
 
 rows, cols = len(numeric_vars)-1, len(numeric_vars)-1
 fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
+
+
+
+data['plot_class'] = data['PERSON_INJURY']
+data["plot_class"].replace({"Injured": "red", "Killed": "blue"}, inplace=True)
+plot_class = data["plot_class"].to_list()
+
+print(data.head())
+
+
+
+# Make scatterplots with class in there
+
+rows, cols = len(numeric_vars)-1, len(numeric_vars)-1
+fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
+for i in range(len(numeric_vars)):
+    var1 = numeric_vars[i]
+    print(var1)
+    for j in range(i+1, len(numeric_vars)):
+        var2 = numeric_vars[j]
+        axs[i, j-1].set_title("%s x %s"%(var1,var2))
+        axs[i, j-1].set_xlabel(var1)
+        axs[i, j-1].set_ylabel(var2)
+        axs[i, j-1].scatter(data[var1], data[var2], s = 0.5, c = plot_class, cmap='winter')
+savefig('lab01_data_profiling\images\set1\sparsity_study_numeric_set1_class_variable.png')
+show()
+
+
+
+rows, cols = len(numeric_vars)-1, len(numeric_vars)-1
+fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
+
 for i in range(len(numeric_vars)):
     var1 = numeric_vars[i]
     for j in range(i+1, len(numeric_vars)):
@@ -27,8 +60,8 @@ for i in range(len(numeric_vars)):
         axs[i, j-1].set_title("%s x %s"%(var1,var2))
         axs[i, j-1].set_xlabel(var1)
         axs[i, j-1].set_ylabel(var2)
-        axs[i, j-1].scatter(data[var1], data[var2])
-savefig('lab01_data_profiling\images\sparsity_study_numeric_set1.png')
+        axs[i, j-1].scatter(data[var1], data[var2], s=0.5)
+savefig('lab01_data_profiling\images\set1\sparsity_study_numeric_set1.png')
 show()
 
 from matplotlib.pyplot import savefig, show, subplots
@@ -55,5 +88,19 @@ for i in range(len(symbolic_vars)):
         axs[i, j-1].set_xlabel(var1)
         axs[i, j-1].set_ylabel(var2)
         axs[i, j-1].scatter(data[var1], data[var2])
-savefig(f'lab01_data_profiling\images\sparsity_study_symbolic_set1.png')
+savefig(f'lab01_data_profiling\images\set1\sparsity_study_symbolic_set1.png')
 show()
+
+rows, cols = len(symbolic_vars)-1, len(symbolic_vars)-1
+fig, axs = subplots(rows, cols, figsize=(cols*HEIGHT, rows*HEIGHT), squeeze=False)
+for i in range(len(symbolic_vars)):
+    var1 = symbolic_vars[i]
+    for j in range(i+1, len(symbolic_vars)):
+        var2 = symbolic_vars[j]
+        axs[i, j-1].set_title("%s x %s"%(var1,var2))
+        axs[i, j-1].set_xlabel(var1)
+        axs[i, j-1].set_ylabel(var2)
+        axs[i, j-1].scatter(data[var1], data[var2], c = plot_class)
+savefig(f'lab01_data_profiling\images\set1\sparsity_study_symbolic_set1_class_variable.png')
+show()
+
