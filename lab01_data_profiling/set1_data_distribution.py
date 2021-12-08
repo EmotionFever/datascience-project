@@ -22,7 +22,7 @@ savefig('lab01_data_profiling/images/data_distribution_set1_numeric_data_details
 
 #Charts with details about single numeric
 # numeric_vars = get_variable_types(data)['Numeric']
-numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
+numeric_vars = ['PERSON_AGE']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 rows, cols = choose_grid(len(numeric_vars))
@@ -39,7 +39,7 @@ show()
 #Chart with numbers of outliers
 NR_STDEV: int = 2
 
-numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
+numeric_vars = ['PERSON_AGE']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -65,7 +65,7 @@ show()
 
 
 #Histrograms with number of outliers
-numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
+numeric_vars = ['PERSON_AGE']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -82,7 +82,7 @@ show()
 
 
 #Histograms with trends
-numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
+numeric_vars = ['PERSON_AGE']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
@@ -116,7 +116,7 @@ def histogram_with_distributions(ax: Axes, series: Series, var: str):
     distributions = compute_known_distributions(values)
     multiple_line_chart(values, distributions, ax=ax, title='Best fit for %s'%var, xlabel=var, ylabel='')
 
-numeric_vars = ['PERSON_AGE', 'VEHICLE_ID', 'UNIQUE_ID', 'COLLISION_ID']
+numeric_vars = ['PERSON_AGE']
 if [] == numeric_vars:
     raise ValueError('There are no numeric variables.')
 
