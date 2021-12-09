@@ -14,7 +14,7 @@ print(data.shape)
 figure(figsize=(4,2))
 values = {'nr records': data.shape[0], 'nr variables': data.shape[1]}
 bar_chart(list(values.keys()), list(values.values()), title='Nr of records vs nr variables')
-savefig('lab01_data_profiling/images/data_dimenstionality_set2_records_variables.png')
+savefig('lab01_data_profiling/images/set2/data_dimenstionality_set2_records_variables.png')
 show()
 
 #Data types
@@ -57,7 +57,7 @@ for tp in variable_types.keys():
     counts[tp] = len(variable_types[tp])
 figure(figsize=(4,2))
 bar_chart(list(counts.keys()), list(counts.values()), title='Nr of variables per type')
-savefig('lab01_data_profiling/images/data_dimenstionality_set2_variable_types.png')
+savefig('lab01_data_profiling/images/set2/data_dimenstionality_set2_variable_types.png')
 show()
 
 #Chart with missing values
@@ -70,5 +70,5 @@ for var in data:
 figure()
 bar_chart(list(mv.keys()), list(mv.values()), title='Nr of missing values per variable',
             xlabel='variables', ylabel='nr missing values', rotation=True)
-savefig('lab01_data_profiling/images/data_dimenstionality_set2_missing_values.png')
+savefig('lab01_data_profiling/images/set2/data_dimenstionality_set2_missing_values.png')
 show()
