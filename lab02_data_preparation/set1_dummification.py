@@ -6,17 +6,21 @@ from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
 
 register_matplotlib_converters()
-file = 'set1_NYC_collisions_tabular'
-filename = 'lab01_data_profiling\data\set1_NYC_collisions_tabular.csv'
+#file = 'set1_NYC_collisions_tabular'
+file = 'set1_mv'
+#filename = 'lab02_data_preparation\data\new_data\set1_mv.csv'
+#filename = 'lab01_data_profiling\data\set1_NYC_collisions_tabular.csv'
+filename = 'lab02_data_preparation\ew_data\set1_mv.csv'
+
 data = read_csv(filename, index_col='CRASH_DATE', na_values='', parse_dates=True, infer_datetime_format=True)
 
 # Drop out all records with missing values
 # This leaves no records at all. First drop columns with lot of empty cells. 
-data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
+#data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
 data.dropna(inplace=True)
 
 from pandas import DataFrame, concat
-#from ds_charts import get_variable_types
+from ds_charts import get_variable_types
 from sklearn.preprocessing import OneHotEncoder
 from numpy import number
 
@@ -33,16 +37,16 @@ def dummify(df, vars_to_dummify):
     final_df = concat([df[other_vars], dummy], axis=1)
     return final_df
 
-#variables = get_variable_types(data)
-#symbolic_vars = variables['Symbolic']
+variables = get_variable_types(data)
+symbolic_vars = variables['Symbolic']
 
 print(data.info())
 #symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'CONTRIBUTING_FACTOR_1', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PED_ACTION', 'PERSON_INJURY']
-symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PERSON_INJURY']
+#symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PERSON_INJURY']
 
 
 print(symbolic_vars)
 df = dummify(data, symbolic_vars)
-df.to_csv(f'lab02_data_preparation\data\{file}_dummified.csv', index=False)
+df.to_csv(f'lab02_data_preparation\ew_data\{file}_dummified.csv', index=False)
 
 df.describe(include=[bool])
