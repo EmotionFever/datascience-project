@@ -1,6 +1,8 @@
 # Dummy encode the symbolic variables. The selection of symbolic variables is hardcoded 
-# since selecting does not work. I also threw out some columns because they had to many missing values. 
-# Retry this step after completing the missing values part. 
+# since selecting does not work. 
+
+#Change symbolic vars here
+symbolic_vars = ['City_EN', 'Prov_EN']
 
 from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
@@ -12,7 +14,7 @@ file = 'set2_mv'
 #filename = 'lab02_data_preparation\data\new_data\set1_mv.csv'
 #filename = 'lab01_data_profiling\data\set1_NYC_collisions_tabular.csv'
 filename = 'lab02_data_preparation\ew_data\set2_mv.csv'
-data = read_csv(filename, index_col='date', na_values='', parse_dates=True, infer_datetime_format=True)
+data = read_csv(filename, index_col='FID', na_values='', parse_dates=True, infer_datetime_format=True)
 
 # Drop out all records with missing values
 # This leaves no records at all. First drop columns with lot of empty cells. 
@@ -38,10 +40,10 @@ def dummify(df, vars_to_dummify):
     return final_df
 
 variables = get_variable_types(data)
-symbolic_vars = variables['Symbolic']
+#symbolic_vars = variables['Symbolic']
 
 print(data.info())
-symbolic_vars = ['City_EN', 'Prov_EN']
+
 
 print(symbolic_vars)
 df = dummify(data, symbolic_vars)
