@@ -7,7 +7,7 @@ from pandas import DataFrame
 #Load data
 register_matplotlib_converters()
 file = 'set2'
-filename = 'lab02_data_preparation/ew_data/set2_mv_dummified.csv'
+filename = 'lab03_knn_and_scaling/ew_data/set2_deleteIDs.csv'
 data = read_csv(filename, na_values='', parse_dates=True, infer_datetime_format=True)
 print(data.shape)
 
