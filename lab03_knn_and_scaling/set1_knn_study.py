@@ -13,18 +13,18 @@ from sklearn.metrics import accuracy_score
 
 
 
-def KNN(file_tag, filename, s):
+def KNN(file_tag, filename_train, filename_test, s):
     
     target = 'PERSON_INJURY'
 
-    train: DataFrame = read_csv(f'{filename}_train.csv')
+    train: DataFrame = read_csv(f'{filename_train}')
     train = train.sample(frac=s, replace=True, random_state=1)
     trnY: ndarray = train.pop(target).values
     trnX: ndarray = train.values
     labels = unique(trnY)
     labels.sort()
 
-    test: DataFrame = read_csv(f'{filename}_test.csv')
+    test: DataFrame = read_csv(f'{filename_test}')
     tstY: ndarray = test.pop(target).values
     tstX: ndarray = test.values
 
@@ -47,7 +47,7 @@ def KNN(file_tag, filename, s):
 
     figure()
     multiple_line_chart(nvalues, values, title='KNN variants', xlabel='n', ylabel='accuracy', percentage=True)
-    savefig(f'lab03_knn_and_scaling\images\{file_tag}\{file_tag}_knn_study.png')
+    savefig(f'lab03_knn_and_scaling\images\{file_tag}_knn_study.png')
     show()
     print('Best results with %d neighbors and %s'%(best[0], best[1]))
 
@@ -56,9 +56,22 @@ def KNN(file_tag, filename, s):
     prd_trn = clf.predict(trnX)
     prd_tst = clf.predict(tstX)
     plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
-    savefig(f'lab03_knn_and_scaling\images\{file_tag}\{file_tag}_knn_best.png')
+    savefig(f'lab03_knn_and_scaling\images\{file_tag}_knn_best.png')
     show()
 
-# Run KNN for all different codes
-KNN('set1', 'lab03_knn_and_scaling\ew_data\set1', sample)
-KNN('set1_scaled', 'lab03_knn_and_scaling\ew_data\set1_scaling', sample)
+# Run KNN for all different codes NB: add test sets before running
+#KNN('set1', 'lab03_knn_and_scaling\ew_data\set1', sample)
+#KNN('set1_scaled', 'lab03_knn_and_scaling\ew_data\set1_scaling', sample)
+
+test_set_scaled = 'lab03_knn_and_scaling\ew_data\set1_test_scaled.csv'
+#KNN('set1_scaled_over', 'lab04_naive_bayes_and_balancing\data\set1\scaled_over.csv', test_set_scaled, sample)
+#KNN('set1_scaled_under', 'lab04_naive_bayes_and_balancing\data\set1\scaled_under.csv', test_set_scaled, 1)
+#KNN('set1_scaled_smote', 'lab04_naive_bayes_and_balancing\data\set1\scaled_smote.csv', test_set_scaled, sample)
+
+#train: DataFrame = read_csv(f'{'lab04_naive_bayes_and_balancing\data\set1\scaled_over.csv'}')
+#print(train.info())
+
+test_set_unscaled = 'lab03_knn_and_scaling\ew_data\set1_test.csv'
+#KNN('set1_unscaled_over', 'lab04_naive_bayes_and_balancing\data\set1\over.csv', test_set_unscaled, sample)
+KNN('set1_unscaled_under', 'lab04_naive_bayes_and_balancing\data\set1\d_under.csv', test_set_unscaled, 1)
+#KNN('set1_unscaled_smote', 'lab04_naive_bayes_and_balancing\data\set1\smote.csv', test_set_unscaled, sample)
