@@ -7,7 +7,7 @@ from pandas import DataFrame
 #Load data
 register_matplotlib_converters()
 file = 'set1'
-filename = 'lab03_knn_and_scaling/ew_data/set1_deleteIDs.csv'
+filename = 'lab03_knn_and_scaling/ew_data/set1_ready_to_scale.csv'
 data = read_csv(filename, na_values='', parse_dates=True, infer_datetime_format=True)
 print(data.shape)
 
@@ -31,7 +31,7 @@ from pandas import DataFrame, concat
 transf = StandardScaler(with_mean=True, with_std=True, copy=True).fit(df_nr)
 tmp = DataFrame(transf.transform(df_nr), index=data.index, columns= numeric_vars)
 norm_data_zscore = concat([tmp, df_sb,  df_bool], axis=1)
-norm_data_zscore.to_csv(f'lab03_knn_and_scaling/ew_data/{file}_scaled_zscore.csv', index=False)
+# norm_data_zscore.to_csv(f'lab03_knn_and_scaling/ew_data/{file}_scaled_zscore.csv', index=False)
 
 #Scaling MinMax normalization
 from sklearn.preprocessing import MinMaxScaler
@@ -40,7 +40,7 @@ from pandas import DataFrame, concat
 transf = MinMaxScaler(feature_range=(0, 1), copy=True).fit(df_nr)
 tmp = DataFrame(transf.transform(df_nr), index=data.index, columns= numeric_vars)
 norm_data_minmax = concat([tmp, df_sb,  df_bool], axis=1)
-norm_data_minmax.to_csv(f'lab03_knn_and_scaling/ew_data/{file}_scaled_minmax.csv', index=False)
+# norm_data_minmax.to_csv(f'lab03_knn_and_scaling/ew_data/{file}_scaled_minmax.csv', index=False)
 print(norm_data_minmax.describe())
 
 #Boxplots
