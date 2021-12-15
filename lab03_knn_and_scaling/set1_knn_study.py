@@ -9,13 +9,13 @@ file_tag = 'set1'
 filename = 'lab03_knn_and_scaling/ew_data/set1'
 target = 'PERSON_INJURY'
 
-train: DataFrame = read_csv(f'{filename}_train.csv')
+train: DataFrame = read_csv(f'{filename}_train_scaled.csv')
 trnY: ndarray = train.pop(target).values
 trnX: ndarray = train.values
 labels = unique(trnY)
 labels.sort()
 
-test: DataFrame = read_csv(f'{filename}_test.csv')
+test: DataFrame = read_csv(f'{filename}_test_scaled.csv')
 tstY: ndarray = test.pop(target).values
 tstX: ndarray = test.values
 
@@ -38,17 +38,14 @@ for d in dist:
 
 figure()
 multiple_line_chart(nvalues, values, title='KNN variants', xlabel='n', ylabel='accuracy', percentage=True)
-savefig('images/{file_tag}_knn_study.png')
+savefig(f'lab03_knn_and_scaling/images/{file_tag}/{file_tag}_knn_study_scaled.png')
 show()
 print('Best results with %d neighbors and %s'%(best[0], best[1]))
 
-"""
 clf = knn = KNeighborsClassifier(n_neighbors=best[0], metric=best[1])
 clf.fit(trnX, trnY)
 prd_trn = clf.predict(trnX)
 prd_tst = clf.predict(tstX)
 plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
-savefig('images/{file_tag}_knn_best.png')
+savefig(f'lab03_knn_and_scaling/images/{file_tag}/{file_tag}_knn_best_scaled.png')
 show()
-
-"""
