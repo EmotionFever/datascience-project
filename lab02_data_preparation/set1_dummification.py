@@ -2,7 +2,7 @@
 # since selecting does not work. 
 
 # Change columns to dummify here:
-symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'EJECTION', 'POSITION_IN_VEHICLE']
+symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_TYPE', 'POSITION_IN_VEHICLE']
 
 from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
@@ -16,9 +16,30 @@ filename = 'lab02_data_preparation\ew_data\set1_mv.csv'
 
 data = read_csv(filename, index_col='CRASH_TIME', na_values='', parse_dates=True, infer_datetime_format=True)
 
+print(data.head())
 # Drop out all records with missing values
 # This leaves no records at all. First drop columns with lot of empty cells. 
-#data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
+# data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
+data = data.drop(['PERSON_ID', 'UNIQUE_ID', 'VEHICLE_ID', 'PED_ROLE'], axis=1)
+
+# Columns to do: 'PERSON_SEX','EJECTION', PED_ROLE
+
+# drop U columns
+data = data[data.PERSON_SEX != 'U']
+
+person_sex_status_encode = { # personsex
+    'F':1,
+    'M': 0
+}
+data["PERSON_SEX"].replace(person_sex_status_encode, inplace=True)
+
+ejection_status_encode = { # ejection
+    'Ejected':1,
+    'Not Ejected': 0, 
+    'Partially Ejected' : 0.5
+}
+data["EJECTION"].replace(ejection_status_encode, inplace=True)
+
 data.dropna(inplace=True)
 
 from pandas import DataFrame, concat
