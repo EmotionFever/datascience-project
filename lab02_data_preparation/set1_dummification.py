@@ -20,7 +20,7 @@ print(data.head())
 # Drop out all records with missing values
 # This leaves no records at all. First drop columns with lot of empty cells. 
 # data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
-data = data.drop(['PERSON_ID', 'UNIQUE_ID', 'VEHICLE_ID', 'PED_ROLE'], axis=1)
+data = data.drop(['PERSON_ID', 'COLLISION_ID', 'UNIQUE_ID', 'VEHICLE_ID', 'PED_ROLE'], axis=1)
 
 # Columns to do: 'PERSON_SEX','EJECTION', PED_ROLE
 
@@ -39,6 +39,8 @@ ejection_status_encode = { # ejection
     'Partially Ejected' : 0.5
 }
 data["EJECTION"].replace(ejection_status_encode, inplace=True)
+
+data = data[data["EJECTION"] != "Trapped"]
 
 data.dropna(inplace=True)
 
