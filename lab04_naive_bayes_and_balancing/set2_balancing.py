@@ -2,7 +2,7 @@ from pandas import read_csv
 from matplotlib.pyplot import figure, savefig, show
 from ds_charts import bar_chart
 
-filename = 'lab03_knn_and_scaling/ew_data/set2_train_scaled.csv'
+filename = 'lab03_knn_and_scaling/ew_data/set2_train.csv'
 file = "set2"
 original = read_csv(filename, sep=',', decimal='.')
 class_var = 'ALARM'
