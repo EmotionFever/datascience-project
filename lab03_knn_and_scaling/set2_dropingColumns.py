@@ -9,21 +9,8 @@ register_matplotlib_converters()
 file = 'set1'
 filename = 'lab02_data_preparation/ew_data/set2_mv_dummified.csv'
 data = read_csv(filename, na_values='', parse_dates=True, infer_datetime_format=True)
-print(data.shape)
 
+data = data.drop(labels=["GbCity", "City_EN", "Prov_EN", "Field_1"], axis=1)
 
-#Split data into each type
-from ds_charts import get_variable_types
-
-variable_types = get_variable_types(data)
-numeric_vars = variable_types['Numeric']
-symbolic_vars = variable_types['Symbolic']
-boolean_vars = variable_types['Binary']
-
-print(symbolic_vars)
-
-data = data.drop(labels=["GbCity"], axis=1)
-
-
-data.to_csv('lab03_knn_and_scaling/ew_data/set2_deleteIDs.csv', index=False)
+data.to_csv('lab03_knn_and_scaling/ew_data/set2_ready_to_scale.csv', index=False)
 

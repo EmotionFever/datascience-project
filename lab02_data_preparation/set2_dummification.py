@@ -2,7 +2,7 @@
 # since selecting does not work. 
 
 #Change symbolic vars here
-symbolic_vars = ['City_EN', 'Prov_EN']
+symbolic_vars = ['GbProv']
 
 from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
