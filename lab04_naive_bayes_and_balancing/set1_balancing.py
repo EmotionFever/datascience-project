@@ -1,13 +1,14 @@
 # Commented out the class histogram, already have that one right?
 # Dropped ID columns, why are they still here?
+# Run for both scaled and unscaled trainingsets and then use the old testsets
 
 from pandas import read_csv
 from matplotlib.pyplot import figure, savefig, show
-#from ds_charts import bar_chart
+from ds_charts import bar_chart
 
 #filename = 'data/unbalanced.csv'
-filename = 'lab03_knn_and_scaling/ew_data/set1_scaled.csv'
-file = "unbalanced"
+filename = 'lab03_knn_and_scaling\ew_data\set1_train_scaled.csv'
+file = "scaled"
 original = read_csv(filename, sep=',', decimal='.')
 class_var = 'PERSON_INJURY'
 target_count = original[class_var].value_counts()
@@ -19,14 +20,11 @@ print('Majority class=', negative_class, ':', target_count[negative_class])
 print('Proportion:', round(target_count[positive_class] / target_count[negative_class], 2), ': 1')
 values = {'Original': [target_count[positive_class], target_count[negative_class]]}
 
-# drop the ID's that are still in the dataset? why?
-original = original.drop(columns=['VEHICLE_ID', 'PERSON_ID', 'UNIQUE_ID', 'COLLISION_ID', 'PED_ROLE'])
-print(original.info())
 
-#figure()
-#bar_chart(target_count.index, target_count.values, title='Class balance')
-#savefig(f'images/{file}_balance.png')
-#show()
+figure()
+bar_chart(target_count.index, target_count.values, title='Class balance')
+savefig(f'lab04_naive_bayes_and_balancing\images\set1\{file}_balance.png')
+show()
 
 # split datasets per class 
 df_positives = original[original[class_var] == positive_class]
