@@ -6,6 +6,7 @@ symbolic_vars = ['GbProv']
 
 from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
+import numpy as np
 
 register_matplotlib_converters()
 #file = 'set2_air_quality_tabular'

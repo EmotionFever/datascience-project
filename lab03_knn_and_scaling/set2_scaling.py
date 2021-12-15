@@ -7,7 +7,7 @@ from pandas import DataFrame
 #Load data
 register_matplotlib_converters()
 file = 'set2'
-filename = 'lab03_knn_and_scaling/ew_data/set2_ready_to_scale.csv'
+filename = 'lab03_knn_and_scaling\ew_data\set2_ready_to_scale.csv'
 data = read_csv(filename, na_values='', parse_dates=True, infer_datetime_format=True)
 print(data.shape)
 

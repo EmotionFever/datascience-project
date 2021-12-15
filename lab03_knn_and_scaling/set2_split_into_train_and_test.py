@@ -4,9 +4,12 @@ import matplotlib.pyplot as plt
 import ds_charts as ds
 from sklearn.model_selection import train_test_split
 
-file_tag = 'set2'
+file_tag = 'set2_scaled'
 # data: DataFrame = read_csv('lab03_knn_and_scaling/ew_data/set2_deleteIDs.csv')
-data: DataFrame = read_csv('lab03_knn_and_scaling/ew_data/set2_scaled.csv')
+data: DataFrame = read_csv('lab03_knn_and_scaling\ew_data\set2_scaled.csv')
+# data: DataFrame = read_csv('lab03_knn_and_scaling\ew_data\set2_ready_to_scale.csv')
+
+
 target = 'ALARM'
 positive = 0
 negative = 1
@@ -24,15 +27,15 @@ trnX, tstX, trnY, tstY = train_test_split(X, y, train_size=0.7, stratify=y)
 
 train = concat([DataFrame(trnX, columns=data.columns), DataFrame(trnY,columns=[target])], axis=1)
 # train.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_train.csv', index=False)
-train.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_train_scaled.csv', index=False)
+train.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_train.csv', index=False)
 
 test = concat([DataFrame(tstX, columns=data.columns), DataFrame(tstY,columns=[target])], axis=1)
 # test.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_test.csv', index=False)
-test.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_test_scaled.csv', index=False)
+test.to_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_test.csv', index=False)
 values['Train'] = [len(np.delete(trnY, np.argwhere(trnY==negative))), len(np.delete(trnY, np.argwhere(trnY==positive)))]
 values['Test'] = [len(np.delete(tstY, np.argwhere(tstY==negative))), len(np.delete(tstY, np.argwhere(tstY==positive)))]
 
 plt.figure(figsize=(12,4))
 ds.multiple_bar_chart([positive_label, negative_label], values, title='Data distribution per dataset')
-plt.savefig(f'lab03_knn_and_scaling/images/{file_tag}/{file_tag}_data_distribution_per_dataset.png')
+#plt.savefig(f'lab03_knn_and_scaling/images/{file_tag}/{file_tag}_data_distribution_per_dataset.png')
 plt.show()
