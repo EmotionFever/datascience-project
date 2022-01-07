@@ -15,12 +15,12 @@ trnX: ndarray = train.values
 labels = unique(trnY)
 labels.sort()
 
-test: DataFrame = read_csv(f'{filename}_test.csv')
+test: DataFrame = read_csv(f'{filename}_test_scaled.csv')
 tstY: ndarray = test.pop(target).values
 tstX: ndarray = test.values
 
-min_impurity_decrease = [0.1, 0.01, 0.005, 0.0025, 0.001, 0.0005, 0.00025, 0.0001]
-max_depths = [2, 5, 10, 15, 20, 25, 30, 35, 40]
+min_impurity_decrease = [0.01, 0.005, 0.0025, 0.001, 0.0005, 0.0001, 0.00005, 0.00001]
+max_depths = [2, 5, 10, 15, 20, 25]
 criteria = ['entropy', 'gini']
 best = ('',  0, 0.0)
 last_best = 0
@@ -48,12 +48,39 @@ for k in range(len(criteria)):
                            xlabel='min_impurity_decrease', ylabel='accuracy', percentage=True)
 savefig(f'lab05_decision_trees_and_overfitting/images/{file_tag}/{file_tag}_dt_study.png')
 show()
-print('Best results achieved with %s criteria, depth=%d and min_impurity_decrease=%1.2f ==> accuracy=%1.2f'%(best[0], best[1], best[2], last_best))
+print('Best results achieved with %s criteria, depth=%d and min_impurity_decrease=%1.6f ==> accuracy=%1.2f'%(best[0], best[1], best[2], last_best))
+
+# from sklearn import tree
+
+# labels = [str(value) for value in labels]
+# tree.plot_tree(best_model, feature_names=train.columns, class_names=labels)
+# savefig(f'lab05_decision_trees_and_overfitting/images/{file_tag}/{file_tag}_dt_best_tree.png')
+# show()
 
 
-from sklearn import tree
+prd_trn = best_model.predict(trnX)
+prd_tst = best_model.predict(tstX)
+plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
+savefig(f'lab05_decision_trees_and_overfitting/images/{file_tag}/{file_tag}_dt_best.png')
+show()
 
-labels = [str(value) for value in labels]
-tree.plot_tree(best_model, feature_names=train.columns, class_names=labels)
-savefig(f'lab05_decision_trees_and_overfitting/images/{file_tag}/{file_tag}_dt_best_tree.png')
+
+from numpy import argsort, arange
+from ds_charts import horizontal_bar_chart
+from matplotlib.pyplot import Axes
+
+variables = train.columns
+importances = best_model.feature_importances_
+indices = argsort(importances)[::-1]
+elems = []
+imp_values = []
+for f in range(len(variables)):
+    elems += [variables[indices[f]]]
+    imp_values += [importances[indices[f]]]
+    print(f'{f+1}. feature {elems[f]} ({importances[indices[f]]})')
+
+figure()
+horizontal_bar_chart(elems, imp_values, error=None, title='Decision Tree Features importance', xlabel='importance', ylabel='variables')
+savefig(f'lab05_decision_trees_and_overfitting/images/{file_tag}/{file_tag}_dt_ranking.png')
+
 show()
