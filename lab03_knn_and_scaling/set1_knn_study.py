@@ -2,7 +2,7 @@
 # make sample
 
 # change sample in percentage here
-sample = 0.05
+sample = 1
 
 from numpy import ndarray
 from pandas import DataFrame, read_csv, unique
@@ -48,7 +48,7 @@ def KNN(file_tag, filename_train, filename_test, s):
     figure()
     multiple_line_chart(nvalues, values, title='KNN variants', xlabel='n', ylabel='accuracy', percentage=True)
     savefig(f'lab03_knn_and_scaling\images\{file_tag}_knn_study.png')
-    show()
+    #show()
     print('Best results with %d neighbors and %s'%(best[0], best[1]))
 
     clf = knn = KNeighborsClassifier(n_neighbors=best[0], metric=best[1])
@@ -57,7 +57,7 @@ def KNN(file_tag, filename_train, filename_test, s):
     prd_tst = clf.predict(tstX)
     plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
     savefig(f'lab03_knn_and_scaling\images\{file_tag}_knn_best.png')
-    show()
+    #show()
 
 # Run KNN for all different codes NB: add test sets before running
 #KNN('set1', 'lab03_knn_and_scaling\ew_data\set1', sample)
@@ -73,5 +73,5 @@ test_set_scaled = 'lab03_knn_and_scaling\ew_data\set1_test_scaled.csv'
 
 test_set_unscaled = 'lab03_knn_and_scaling\ew_data\set1_test.csv'
 #KNN('set1_unscaled_over', 'lab04_naive_bayes_and_balancing\data\set1\over.csv', test_set_unscaled, sample)
-KNN('set1_unscaled_under', 'lab04_naive_bayes_and_balancing\data\set1\d_under.csv', test_set_unscaled, 1)
+#KNN('set1_unscaled_under', 'lab04_naive_bayes_and_balancing\data\set1\d_under.csv', test_set_unscaled, 1)
 #KNN('set1_unscaled_smote', 'lab04_naive_bayes_and_balancing\data\set1\smote.csv', test_set_unscaled, sample)

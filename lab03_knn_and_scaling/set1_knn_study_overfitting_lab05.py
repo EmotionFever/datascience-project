@@ -2,7 +2,7 @@
 # make sample
 import matplotlib.pyplot as plt
 # change sample in percentage here
-sample = 0.05
+sample = 1
 
 from numpy import ndarray
 from pandas import DataFrame, read_csv, unique
