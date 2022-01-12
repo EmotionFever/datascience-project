@@ -3,7 +3,7 @@ from pandas import DataFrame, read_csv, unique
 from matplotlib.pyplot import figure, subplots, savefig, show
 from sklearn.ensemble import RandomForestClassifier
 from ds_charts import plot_evaluation_results, multiple_line_chart, horizontal_bar_chart, HEIGHT
-from sklearn.metrics import accuracy_score, precision_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 # change sample in percentage here
 sample = 0.05
@@ -42,7 +42,7 @@ for k in range(len(max_depths)):
             rf = RandomForestClassifier(n_estimators=n, max_depth=d, max_features=f)
             rf.fit(trnX, trnY)
             prdY = rf.predict(tstX)
-            yvalues.append(accuracy_score(tstY, prdY))
+            yvalues.append(recall_score(tstY, prdY))
             if yvalues[-1] > last_best:
                 best = (d, f, n)
                 last_best = yvalues[-1]
@@ -50,10 +50,10 @@ for k in range(len(max_depths)):
 
         values[f] = yvalues
     multiple_line_chart(n_estimators, values, ax=axs[0, k], title=f'Random Forests with max_depth={d}',
-                           xlabel='nr estimators', ylabel='accuracy', percentage=True)
-savefig(f'lab06_random_forests_and_feature_selection/images/{file_tag}/{file_tag}_rf_study_accuracy.png')
+                           xlabel='nr estimators', ylabel='recall', percentage=True)
+savefig(f'lab06_random_forests_and_feature_selection/images/{file_tag}/{file_tag}_rf_study_recall.png')
 show()
-print('Best results with depth=%d, %1.2f features and %d estimators, with accuracy=%1.2f'%(best[0], best[1], best[2], last_best))
+print('Best results with depth=%d, %1.2f features and %d estimators, with recall=%1.2f'%(best[0], best[1], best[2], last_best))
 
 
 prd_trn = best_model.predict(trnX)
