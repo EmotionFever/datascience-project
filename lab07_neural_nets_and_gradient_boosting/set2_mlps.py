@@ -2,7 +2,7 @@ from numpy import ndarray
 from pandas import DataFrame, read_csv, unique
 from matplotlib.pyplot import figure, subplots, savefig, show
 from sklearn.neural_network import MLPClassifier
-from ds_charts import plot_evaluation_results, multiple_line_chart, horizontal_bar_chart, HEIGHT
+from ds_charts import plot_evaluation_results, multiple_line_chart, horizontal_bar_chart, HEIGHT, plot_line
 from sklearn.metrics import recall_score
 from ds_charts import plot_overfitting_study
 
@@ -24,8 +24,8 @@ tstY: ndarray = test.pop(target).values
 tstX: ndarray = test.values
 
 lr_type = ['constant', 'invscaling', 'adaptive']
-max_iter = [100, 300, 500, 750, 1000, 2500, 5000]
-learning_rate = [.1, .5, .9]
+max_iter = [1000, 2500, 5000, 7500, 10000]
+learning_rate = [.01, .05, .09]
 best = ('', 0, 0)
 last_best = 0
 best_model = None
@@ -68,6 +68,9 @@ print(f'Best results with lr_type={best[0]}, learning rate={best[1]} and {best[2
 
 path_img = f'lab07_neural_nets_and_gradient_boosting/images/{file_tag}/{file_tag}_nn_overfit.png'
 plot_overfitting_study(max_iter, y_trn_values, y_tst_values, name=f'Neural Network lr={best[1]}', xlabel='max_iterations', ylabel=str(eval_metric), path_img=path_img)
+loss = best_model.loss_curve_
+plot_line(xvalues=[i for i in range(len(loss))], yvalues=loss, xlabel='iterations', ylabel='loss', title='Loss function')
+savefig(f'lab07_neural_nets_and_gradient_boosting/images/{file_tag}/{file_tag}_nn_loss.png')
 show()
 
 prd_trn = best_model.predict(trnX)
