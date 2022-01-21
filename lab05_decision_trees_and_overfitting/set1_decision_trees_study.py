@@ -9,13 +9,13 @@ file_tag = 'set1'
 filename = 'lab03_knn_and_scaling/ew_data/set1'
 target = 'PERSON_INJURY'
 
-train: DataFrame = read_csv(f'lab04_naive_bayes_and_balancing/ew_data/set1_smote_scaled.csv')
+train: DataFrame = read_csv(f'lab04_naive_bayes_and_balancing/data/scaled_smote.csv')
 trnY: ndarray = train.pop(target).values
 trnX: ndarray = train.values
 labels = unique(trnY)
 labels.sort()
 
-test: DataFrame = read_csv(f'{filename}_test_scaled.csv')
+test: DataFrame = read_csv(f'{filename}_scaled_test.csv')
 tstY: ndarray = test.pop(target).values
 tstX: ndarray = test.values
 
