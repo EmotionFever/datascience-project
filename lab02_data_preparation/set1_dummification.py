@@ -2,7 +2,7 @@
 # since selecting does not work. 
 
 # Change columns to dummify here:
-symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_TYPE', 'POSITION_IN_VEHICLE']
+symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_TYPE', 'POSITION_IN_VEHICLE', "EJECTION"]
 
 from pandas import read_csv
 from pandas.plotting import register_matplotlib_converters
@@ -20,9 +20,9 @@ print(data.head())
 # Drop out all records with missing values
 # This leaves no records at all. First drop columns with lot of empty cells. 
 # data = data.drop(['PED_LOCATION', 'CONTRIBUTING_FACTOR_2', 'CONTRIBUTING_FACTOR_1', 'PED_ACTION'], axis=1)
-data = data.drop(['PERSON_ID', 'COLLISION_ID', 'UNIQUE_ID', 'VEHICLE_ID', 'PED_ROLE'], axis=1)
+data = data.drop(['PERSON_ID', 'COLLISION_ID', 'UNIQUE_ID', 'VEHICLE_ID', 'PED_ROLE', 'EMOTIONAL_STATUS'], axis=1)
 
-# Columns to do: 'PERSON_SEX','EJECTION', PED_ROLE
+# Columns to do: 'PERSON_SEX'
 
 # drop U columns
 data = data[data.PERSON_SEX != 'U']
@@ -33,16 +33,6 @@ person_sex_status_encode = { # personsex
 }
 data["PERSON_SEX"].replace(person_sex_status_encode, inplace=True)
 
-ejection_status_encode = { # ejection
-    'Ejected':1,
-    'Not Ejected': 0, 
-    'Partially Ejected' : 0.5
-}
-data["EJECTION"].replace(ejection_status_encode, inplace=True)
-
-data = data[data["EJECTION"] != "Trapped"]
-
-data.dropna(inplace=True)
 
 from pandas import DataFrame, concat
 from ds_charts import get_variable_types
@@ -62,16 +52,14 @@ def dummify(df, vars_to_dummify):
     final_df = concat([df[other_vars], dummy], axis=1)
     return final_df
 
-variables = get_variable_types(data)
-#symbolic_vars = variables['Symbolic']
-
 print(data.info())
-
-#symbolic_vars = ['BODILY_INJURY', 'SAFETY_EQUIPMENT', 'PERSON_SEX', 'PERSON_TYPE', 'EJECTION', 'COMPLAINT', 'EMOTIONAL_STATUS', 'POSITION_IN_VEHICLE', 'PED_ROLE', 'PERSON_INJURY']
 
 
 print(symbolic_vars)
 df = dummify(data, symbolic_vars)
+
+df = df.drop(['SAFETY_EQUIPMENT_nan', 'EJECTION_nan', 'POSITION_IN_VEHICLE_nan'], axis=1)
+
 df.to_csv(f'lab02_data_preparation\ew_data\{file}_dummified.csv', index=False)
 
 df.describe(include=[bool])
