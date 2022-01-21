@@ -60,6 +60,11 @@ df = dummify(data, symbolic_vars)
 
 df = df.drop(['SAFETY_EQUIPMENT_nan', 'EJECTION_nan', 'POSITION_IN_VEHICLE_nan'], axis=1)
 
+#fill Nan in 'COMPLAINT' column with most frequent value
+
+most_frequent = df['COMPLAINT'].value_counts().idxmax()
+df['COMPLAINT'] = df['COMPLAINT'].fillna(most_frequent)
+
 df.to_csv(f'lab02_data_preparation\ew_data\{file}_dummified.csv', index=False)
 
 df.describe(include=[bool])
