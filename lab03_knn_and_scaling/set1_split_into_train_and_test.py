@@ -40,5 +40,5 @@ def split(file_tag, input):
     plt.show()
 
 
-split('set1', 'lab03_knn_and_scaling\ew_data\set1_ready_to_scale.csv')
+# split('set1', 'lab02_data_preparation\ew_data\set1_mv_dummified.csv')
 split('set1_scaled', 'lab03_knn_and_scaling\ew_data\set1_scaled.csv')
