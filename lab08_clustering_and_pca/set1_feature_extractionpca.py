@@ -55,3 +55,10 @@ axs[0,1].set_xlabel('PC1')
 axs[0,1].set_ylabel('PC2')
 axs[0,1].scatter(transf[:, 0], transf[:, 1])
 show()
+
+column_values = ["PCA" + str(i) for i in range(1, transf.shape[1] + 1)]
+print(column_values)
+df_pca = DataFrame(data = transf, columns = column_values)
+# Select the most important variables PCA1 to PCA6 for a 97.9 variance coverage
+df_pca = df_pca[['PCA1', 'PCA2', 'PCA3', 'PCA4', 'PCA5', 'PCA6']]
+df_pca.to_csv(f'lab08_clustering_and_pca/ew_data/{file_tag}_pca.csv', index=False)
