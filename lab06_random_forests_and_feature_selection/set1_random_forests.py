@@ -12,7 +12,7 @@ file_tag = 'set1'
 filename = 'lab03_knn_and_scaling/ew_data/set1'
 target = 'PERSON_INJURY'
 
-train: DataFrame = read_csv(f'lab04_naive_bayes_and_balancing/data/scaled_smote.csv')
+train: DataFrame = read_csv(f'lab04_naive_bayes_and_balancing/ew_data/set1_scaled_smote.csv')
 train = train.sample(frac=sample, replace=True, random_state=1)
 trnY: ndarray = train.pop(target).values
 trnX: ndarray = train.values
