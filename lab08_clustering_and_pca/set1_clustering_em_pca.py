@@ -11,10 +11,8 @@ target = 'PERSON_INJURY'
 
 ##### original set data
 
-data: DataFrame = read_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_scaled.csv')
+data: DataFrame = read_csv(f'lab08_clustering_and_pca/ew_data/{file_tag}_pca.csv')
 data = data.sample(frac=sample, replace=True, random_state=1)
-# data.pop('id')
-target_column = data.pop(target)
 v1 = 0
 v2 = 1
 
@@ -45,31 +43,11 @@ for n in range(len(N_CLUSTERS)):
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
     if k == 2:
         best_model = estimator
-savefig(f'lab08_clustering_and_pca/images/{file_tag}/{file_tag}_em_k_variation.png')
+savefig(f'lab08_clustering_and_pca/images/{file_tag}/{file_tag}_em_k_variation_pca.png')
 show()
 
 fig, ax = subplots(1, 2, figsize=(6, 3), squeeze=False)
 plot_line(N_CLUSTERS, mse, title='EM MSE', xlabel='k', ylabel='MSE', ax=ax[0, 0])
 plot_line(N_CLUSTERS, sc, title='EM SC', xlabel='k', ylabel='SC', ax=ax[0, 1], percentage=True)
-savefig(f'lab08_clustering_and_pca/images/{file_tag}/{file_tag}_em_eval.png')
+savefig(f'lab08_clustering_and_pca/images/{file_tag}/{file_tag}_em_eval_pca.png')
 show()
-
-train: DataFrame = read_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_scaled_train.csv')
-train = train.sample(frac=sample, replace=True, random_state=1)
-trnY: ndarray = train.pop(target).values
-trnX: ndarray = train.values
-labels = unique(trnY)
-labels.sort()
-
-test: DataFrame = read_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_scaled_test.csv')
-tstY: ndarray = test.pop(target).values
-tstX: ndarray = test.values
-
-prd_trn = best_model.predict(trnX)
-prd_tst = best_model.predict(tstX)
-plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
-savefig(f'lab08_clustering_and_pca/images/{file_tag}/{file_tag}_em_best.png')
-show()
-mae = mean_absolute_error(target_column, best_model.predict(data))
-#mae = mae if mae > 0.5 else 1 - mae
-print("MAE (k=2): " + str(mae))
