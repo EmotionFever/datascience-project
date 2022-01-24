@@ -1,20 +1,22 @@
 from pandas import DataFrame, read_csv, unique
 from matplotlib.pyplot import subplots, show, savefig
-from ds_charts import choose_grid, plot_clusters, plot_line, plot_evaluation_results, compute_mse, compute_centroids, bar_chart
+from ds_charts import choose_grid, plot_clusters, plot_line, plot_evaluation_results, compute_mse, compute_mae, compute_centroids, bar_chart
 from numpy import ndarray
+from sklearn.metrics import davies_bouldin_score
 
-sample = 0.05
+sample = 0.25
 
 file_tag = 'set1'
 filename = 'lab03_knn_and_scaling/ew_data/set1'
-target = 'PERSON_INJURY'
+#target = 'PERSON_INJURY'
 
 ##### original set data
 
-data: DataFrame = read_csv(f'lab03_knn_and_scaling/ew_data/{file_tag}_scalled.csv')
+data: DataFrame = read_csv(f'lab08_clustering_and_pca\data\set1_pca.csv')
 data = data.sample(frac=sample, replace=True, random_state=1)
-# data.pop('id')
-target_column = data.pop(target)
+#data.pop('PERSON_INJURY')
+data.reset_index(inplace=True, drop=True)
+#target_column = data.pop(target)
 v1 = 0
 v2 = 1
 
@@ -26,7 +28,9 @@ from sklearn.metrics import silhouette_score
 
 EPS = [2.5, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 mse: list = []
+mae: list = []
 sc: list = []
+dbs: list = []
 rows, cols = choose_grid(len(EPS))
 _, axs = subplots(rows, cols, figsize=(cols*5, rows*5), squeeze=False)
 i, j = 0, 0
@@ -38,17 +42,23 @@ for n in range(len(EPS)):
     if k > 1:
         centers = compute_centroids(data, labels)
         mse.append(compute_mse(data.values, labels, centers))
+        mae.append(compute_mae(data.values, labels, centers))
         sc.append(silhouette_score(data, labels))
+        dbs.append(davies_bouldin_score(data.values, labels))
         plot_clusters(data, v2, v1, labels.astype(float), estimator.components_, k, f'DBSCAN eps={EPS[n]} k={k}', ax=axs[i,j])
         i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
     else:
         mse.append(0)
+        mae.append(0)
         sc.append(0)
+        dbs.append(0)
 show()
 
-fig, ax = subplots(1, 2, figsize=(6, 3), squeeze=False)
+fig, ax = subplots(1, 4, figsize=(10, 3), squeeze=False)
 plot_line(EPS, mse, title='DBSCAN MSE', xlabel='eps', ylabel='MSE', ax=ax[0, 0])
-plot_line(EPS, sc, title='DBSCAN SC', xlabel='eps', ylabel='SC', ax=ax[0, 1], percentage=True)
+plot_line(EPS, mae, title='DBSCAN MAE', xlabel='eps', ylabel='MAE', ax=ax[0, 1])
+plot_line(EPS, sc, title='DBSCAN SC', xlabel='eps', ylabel='SC', ax=ax[0, 2], percentage=True)
+plot_line(EPS, sc, title='DBSCAN DBS', xlabel='eps', ylabel='DBS', ax=ax[0, 3])
 show()
 
 import numpy as np
@@ -69,7 +79,9 @@ distances[4] *= 0.15
 print('CHOSEN EPS', distances)
 
 mse: list = []
+mae: list = []
 sc: list = []
+dbs: list = []
 rows, cols = choose_grid(len(METRICS))
 _, axs = subplots(rows, cols, figsize=(cols*5, rows*5), squeeze=False)
 i, j = 0, 0
@@ -81,15 +93,21 @@ for n in range(len(METRICS)):
     if k > 1:
         centers = compute_centroids(data, labels)
         mse.append(compute_mse(data.values, labels, centers))
+        mae.append(compute_mse(data.values, labels, centers))
         sc.append(silhouette_score(data, labels))
+        dbs.append(davies_bouldin_score(data.values, labels))
         plot_clusters(data, v2, v1, labels.astype(float), estimator.components_, k, f'DBSCAN metric={METRICS[n]} eps={distances[n]:.2f} k={k}', ax=axs[i,j])
     else:
         mse.append(0)
+        mae.append(0)
         sc.append(0)
+        dbs.append(0)
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
 show()
 
-fig, ax = subplots(1, 2, figsize=(6, 3), squeeze=False)
+fig, ax = subplots(1, 4, figsize=(10, 3), squeeze=False)
 bar_chart(METRICS, mse, title='DBSCAN MSE', xlabel='metric', ylabel='MSE', ax=ax[0, 0])
-bar_chart(METRICS, sc, title='DBSCAN SC', xlabel='metric', ylabel='SC', ax=ax[0, 1], percentage=True)
+bar_chart(METRICS, mae, title='DBSCAN MAE', xlabel='metric', ylabel='MAE', ax=ax[0, 1])
+bar_chart(METRICS, sc, title='DBSCAN SC', xlabel='metric', ylabel='SC', ax=ax[0, 2], percentage=True)
+bar_chart(METRICS, dbs, title='DBSCAN DBS', xlabel='metric', ylabel='DBS', ax=ax[0, 3])
 show()

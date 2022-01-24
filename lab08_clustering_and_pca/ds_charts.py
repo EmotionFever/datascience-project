@@ -203,6 +203,8 @@ def plot_clusters(data, var1st, var2nd, clusters, centers: list, n_clusters: int
 
 def compute_centroids(data: DataFrame, labels: ndarray) -> list:
     n_vars = data.shape[1]
+    # added drop = True
+    # eigenlijk eerst dat pop beter begrijpen
     ext_data = concat([data, DataFrame(labels)], axis=1)
     ext_data.columns = list(data.columns) + ['cluster']
     clusters = unique(labels)
@@ -223,6 +225,15 @@ def compute_mse(X: ndarray, labels: list, centroids: list) -> float:
     n = len(X)
     centroid_per_record = [centroids[labels[i]] for i in range(n)]
     partial = X - centroid_per_record
+    partial = list(partial * partial)
+    partial = [sum(el) for el in partial]
+    partial = sum(partial)
+    return math.sqrt(partial) / (n-1)
+
+def compute_mae(X: ndarray, labels: list, centroids: list) -> float:
+    n = len(X)
+    centroid_per_record = [centroids[labels[i]] for i in range(n)]
+    partial = (X - centroid_per_record)**2
     partial = list(partial * partial)
     partial = [sum(el) for el in partial]
     partial = sum(partial)
