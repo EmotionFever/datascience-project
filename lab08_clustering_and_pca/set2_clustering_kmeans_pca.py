@@ -1,13 +1,13 @@
 from pandas import DataFrame, read_csv, unique
 from matplotlib.pyplot import subplots, show, savefig
-from ds_charts import choose_grid, plot_clusters, plot_line, plot_evaluation_results, compute_mse, compute_mae
+from ds_charts import choose_grid, plot_clusters, plot_line, plot_evaluation_results, compute_mae
 from numpy import ndarray
 from sklearn.metrics import davies_bouldin_score
 
 sample = 0.05
 
-file_tag = 'set1'
-filename = 'lab03_knn_and_scaling/ew_data/set1'
+file_tag = 'set2'
+filename = 'lab03_knn_and_scaling/ew_data/set2'
 
 ##### original set data
 data: DataFrame = read_csv(f'lab08_clustering_and_pca/ew_data/{file_tag}_pca.csv')
@@ -42,9 +42,9 @@ for n in range(len(N_CLUSTERS)):
     if k == 2:
         best_model = estimator
     labels = estimator.predict(data)
-    mse.append(compute_mse(data.values, labels, estimator.cluster_centers_))
+    mse.append(estimator.inertia_)
     mae.append(compute_mae(data.values, labels, estimator.cluster_centers_))
-    sc.append(silhouette_score(data, labels))
+    sc.append(silhouette_score(data, estimator.labels_))
     dbs.append(davies_bouldin_score(data.values, labels))
     plot_clusters(data, v2, v1, estimator.labels_.astype(float), estimator.cluster_centers_, k, f'KMeans k={k} PCA', ax=axs[i,j])
     i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)

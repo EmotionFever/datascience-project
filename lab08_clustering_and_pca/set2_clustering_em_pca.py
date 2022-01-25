@@ -6,9 +6,9 @@ from sklearn.metrics import davies_bouldin_score
 
 sample = 0.05
 
-file_tag = 'set1'
-filename = 'lab03_knn_and_scaling/ew_data/set1'
-target = 'PERSON_INJURY'
+file_tag = 'set2'
+filename = 'lab03_knn_and_scaling/ew_data/set2'
+target = 'ALARM'
 
 ##### original set data
 
@@ -40,8 +40,8 @@ for n in range(len(N_CLUSTERS)):
     estimator.fit(data)
     labels = estimator.predict(data)
     mse.append(compute_mse(data.values, labels, estimator.means_))
-    mae.append(compute_mae(data.values, labels, estimator.means_))
     sc.append(silhouette_score(data, labels))
+    mae.append(compute_mae(data.values, labels, estimator.means_))
     dbs.append(davies_bouldin_score(data.values, labels))
     plot_clusters(data, v2, v1, labels.astype(float), estimator.means_, k,
                      f'EM k={k}', ax=axs[i,j])
