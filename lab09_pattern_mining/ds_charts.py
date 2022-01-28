@@ -10,7 +10,7 @@ import config as cfg
 from datetime import datetime
 from sklearn.tree import export_graphviz
 from matplotlib.font_manager import FontProperties
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, KBinsDiscretizer
 
 
 FONT_TEXT = FontProperties(size=6)
@@ -258,6 +258,17 @@ def dummify(df, vars_to_dummify):
     new_vars = encoder.get_feature_names(vars_to_dummify)
     trans_X = encoder.transform(X)
     dummy = DataFrame(trans_X, columns=new_vars, index=X.index)
+    final_df = concat([df[other_vars], dummy], axis=1)
+    return final_df
+
+def discretize(df, strategy, n_bins, vars_to_discretize):
+    other_vars = [c for c in df.columns if not c in vars_to_discretize]
+    encoder = KBinsDiscretizer(n_bins=n_bins, encode="onehot-dense", strategy=strategy)
+    X = df[vars_to_discretize]
+    encoder.fit(X)
+    new_vars = encoder.get_feature_names_out(vars_to_discretize)
+    trans_X = encoder.transform(X)
+    dummy = DataFrame(trans_X, columns=new_vars, index=X.index, dtype='int64')
     final_df = concat([df[other_vars], dummy], axis=1)
     return final_df
 
